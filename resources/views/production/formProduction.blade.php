@@ -1,12 +1,12 @@
 @extends('layouts.main')
 @section('container')
-<center>
-    <br>
-    <hr class="navbar-divider">
-    <h1>Form Produksi</h1>
-    <hr class="navbar-divider">
-    <br>
-</center>
+    <center>
+        <br>
+        <hr class="navbar-divider">
+        <label class="label">Form Produksi</label>
+        <hr class="navbar-divider">
+        <br>
+    </center>
     {{-- {!! QrCode::size(100)->generate(Request::url()); !!} --}}
     @if ($errors->any())
         <div class="alert alert-danger">

@@ -4,10 +4,11 @@
     <center>
         <br>
         <hr class="navbar-divider">
-        <h1>Tabel Material</h1>
+        <label class="label">Tabel Material</label>
         <hr class="navbar-divider">
         <br>
     </center>
+
     <div class="mb-5">
         <a href="/material/create" class="bg-blue-500 text-white px-4 py-3 rounded font-medium">Tambah Material</a>
     </div>

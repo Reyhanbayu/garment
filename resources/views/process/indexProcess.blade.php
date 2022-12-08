@@ -2,12 +2,12 @@
 
 @section('container')
 
-<center>
-    <hr class="navbar-divider">
-    <h1>Table Process</h1>
-    <hr class="navbar-divider">
-    <br>
-</center>
+    <center>
+        <hr class="navbar-divider">
+        <h1>Table Process</h1>
+        <hr class="navbar-divider">
+        <br>
+    </center>
 
 <div class="mb-5">
     <a href="/processtype/create" class="bg-blue-500 text-white px-4 py-3 rounded font-medium" style="padding: 0.5rem">Tambah Proses</a>

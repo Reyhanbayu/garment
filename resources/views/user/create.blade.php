@@ -1,7 +1,14 @@
 @extends('layouts.main')
 @section('container')
 
-<h1>Create User</h1>
+<center>
+    <br>
+    <hr class="navbar-divider">
+    <label class="label">Create User</label>
+    <hr class="navbar-divider">
+    <br>
+</center>
+
 <form action="/user" method="POST">
     @csrf
     <div class="mb-4">

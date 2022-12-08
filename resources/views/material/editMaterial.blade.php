@@ -3,7 +3,7 @@
     <center>
         <br>
         <hr class="navbar-divider">
-        <h1>Form Material</h1>
+        <label class="label">Edit Form Material</label>
         <hr class="navbar-divider">
         <br>
     </center>

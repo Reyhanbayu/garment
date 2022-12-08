@@ -2,7 +2,13 @@
 
 @section('container')
 
-<h1>Edit Form Production</h1>
+    <center>
+        <br>
+        <hr class="navbar-divider">
+        <label class="label">Edit Form Produksi</label>
+        <hr class="navbar-divider">
+        <br>
+    </center>
 
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -50,7 +56,13 @@
     </div>  
 </form>
 
-<h1>Create Process form</h1>
+<center>
+    <br><br>
+    <hr class="navbar-divider">
+    <label class="label">Cretae Process Form</label>
+    <hr class="navbar-divider">
+    <br>
+</center>
 <form action="/process" method="POST" >
     @csrf
     <h1></h1>
@@ -114,8 +126,13 @@
 
 </form>
 
-
-<h1>Sub Process Table</h1>
+<center>
+    <br><br>
+    <hr class="navbar-divider">
+    <label class="label">Sub Process Table</label>
+    <hr class="navbar-divider">
+    <br>
+</center>
 @foreach ($processes->whereNotIn('process_type',[1]) as $p)
     <h1 class=" font-bold">{{ $p->process_name }}</h1>
     <h1>Input Quantity</h1>

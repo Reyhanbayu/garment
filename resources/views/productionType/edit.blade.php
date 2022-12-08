@@ -1,6 +1,12 @@
 @extends('layouts.main')
 @section('container')
-<h1>Edit Production Type</h1>
+<center>
+    <br>
+    <hr class="navbar-divider">
+    <label class="label">Edit Production Type</label>
+    <hr class="navbar-divider">
+    <br>
+</center>
 
 <Form method="POST" action="/productiontype/{{ $productionType->id }}" >
     @csrf

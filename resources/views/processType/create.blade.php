@@ -1,6 +1,13 @@
 @extends('layouts.main')
 @section('container')
-<h1>Create Process Type</h1>
+<center>
+    <br>
+    <hr class="navbar-divider">
+    <label class="label">Create Process Type</label>
+    <hr class="navbar-divider">
+    <br>
+</center>
+
 <Form method="POST" action="/processtype" >
     @csrf
     <div class="mb-4">
