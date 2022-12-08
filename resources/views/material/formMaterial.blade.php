@@ -29,7 +29,8 @@
         <label class="label">Material Quantity</label>
         <div>
             <input type="number" name="quantity" id="quantity" class="input">
-            <select name="measure_unit" id="measure_unit" class=" ">
+            <br>
+            <select name="measure_unit" id="measure_unit" class="input">
                 <option value="kg">kg</option>
                 <option value="l">l</option>
                 <option value="m">m</option>

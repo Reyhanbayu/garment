@@ -4,7 +4,7 @@
 <center>
     <br>
     <hr class="navbar-divider">
-    <label class="label">Create User</label>
+    <label class="label">Form Material</label>
     <hr class="navbar-divider">
     <br>
 </center>

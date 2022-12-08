@@ -4,7 +4,7 @@
 <center>
     <br>
     <hr class="navbar-divider">
-    <label class="label">Create User</label>
+    <label class="label">Create ser</label>
     <hr class="navbar-divider">
     <br>
 </center>
@@ -26,19 +26,19 @@
 
 
     <div class="mb-4">
-        <label for="role" class="sr-only">Role</label>
-        <div class="flex">
+        <label class="label">Role</label>
+        <select name="process_type_name" id="role" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
             @foreach ($processTypes as $process)
-            @if (in_array($process->id, $user->personProcess->pluck('process_type_id')->toArray()))
-                <input type="checkbox" name="process[]" value="{{ $process->id }}" checked>
-                <label for="process">{{ $process->process_type_name }}</label>
+            @if ($process->id == $process->process_type_name)
+                <option value="{{ $process->id }}" selected>{{ $process->process_type_name }}</option>
             @else
-                <input type="checkbox" name="process[]" value="{{ $process->id }}">
-                <label for="process">{{ $process->process_type_name }}</label>
+                <option value="{{ $process->id }}">{{ $process->process_type_name  }}</option>    
             @endif
-                        
-        @endforeach
-        </div>
+
+            @endforeach
+        </select>
+    </div>
+
     <h2>Isi untuk mendaftar sebagai user</h2>
     <div class="mb-4">
         <label for="email" class="sr-only">Email</label>

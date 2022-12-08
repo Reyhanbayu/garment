@@ -35,7 +35,9 @@
         <label for="production_description" >Description</label>
         <input type="text" name="production_description" id="production_description" placeholder="Description" class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="{{ $production->production_description }}">
     </div>
-    <select name="production_type" id="production_type" class="border border-gray-400 p-2">
+    <div class="mb-4">
+    <label for="production_type" >Type</label>
+    <select name="production_type" id="production_type" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
         {{ $production->production_type }}
         @foreach ($productionType as $type)
             @if ($type->id == $production->production_type)
@@ -46,7 +48,7 @@
 
         @endforeach
     </select>
-
+    </div>
     <div class="mb-4">
         <label for="production_projected_end_date" >Projected End Date</label>
         <input type="date" name="production_projected_end_date" id="production_projected_end_date" placeholder="Projected End Date" class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="{{ $production->production_projected_end_date }}">
@@ -143,7 +145,7 @@
 
     @foreach ($p->subProses->GroupBy('user_id') as $subGroup)
         <div class=" border border-black">
-            <h1 class="">Proses Dikerjaka oleh user{{ $subGroup[0]->user->name }}</h1>
+            <h1 class="">Proses Dikerjaka oleh user {{ $subGroup[0]->user->name }}</h1>
             <div class="grid grid-cols-8 gap-6">
                 <h3>Nama Material</h3>
                 <h3>Projected</h3>
@@ -175,6 +177,9 @@
                     </form>
                 </div>
                 @if ($sp->subProcessHistories != Null)
+                <br>
+                <hr class="navbar-divider">
+                <br>
                 <div id="detail_{{ $sp->id }}" >
                     <div class="grid grid-cols-8 gap-6">
                     
@@ -201,7 +206,9 @@
                             @endif
                             
                         </div>
-                        
+                        <<br>
+                        <hr class="navbar-divider">
+                        <br>
                     @endforeach
                 </div>
                
