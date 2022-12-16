@@ -2,7 +2,13 @@
 
 @section('container')
 
-<h1>Edit Form Production</h1>
+    <center>
+        <br>
+        <hr class="navbar-divider">
+        <label class="label">Edit Form Produksi</label>
+        <hr class="navbar-divider">
+        <br>
+    </center>
 
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -29,7 +35,10 @@
         <label for="production_description" >Description</label>
         <input type="text" name="production_description" id="production_description" placeholder="Description" class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="{{ $production->production_description }}">
     </div>
-    <select name="production_type" id="production_type" class="border border-gray-400 p-2">
+    
+    <div class="mb-4">
+    <label for="production_type" >Type</label>
+    <select name="production_type" id="production_type" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
         {{ $production->production_type }}
         @foreach ($productionType as $type)
             @if ($type->id == $production->production_type)
@@ -40,7 +49,8 @@
 
         @endforeach
     </select>
-
+    </div>
+    
     <div class="mb-4">
         <label for="production_projected_end_date" >Projected End Date</label>
         <input type="date" name="production_projected_end_date" id="production_projected_end_date" placeholder="Projected End Date" class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="{{ $production->production_projected_end_date }}">
@@ -50,7 +60,13 @@
     </div>  
 </form>
 
-<h1>Create Process form</h1>
+<center>
+    <br><br>
+    <hr class="navbar-divider">
+    <label class="label">Cretae Process Form</label>
+    <hr class="navbar-divider">
+    <br>
+</center>
 <form action="/process" method="POST" >
     @csrf
     <h1></h1>
@@ -59,20 +75,12 @@
         
         <input type="hidden" name="process_status" id="process_status" value="menunggu">
     </div>
+    
     <div class="mb-4">
-        <label for="user_id">Input id</label>
-        <select name="user_id" id="user_id" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
-            @foreach ($person as $user)
-                <option value="{{ $user[0]->user->id }}">{{ $user[0]->user->name }}</option>
-            @endforeach
-        </select>
+        <input type="hidden" name="process_name" id="process_name" placeholder="Name" class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="">
     </div>
     <div class="mb-4">
-        <label for="process_name" >Name</label>
-        <input type="text" name="process_name" id="process_name" placeholder="Name" class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="{{ old('process_name') }}">
-    </div>
-    <div class="mb-4">
-        <label for="process_id" >Process ID</label>
+        <label for="process_id" >Pilih Prosess</label>
         <select id="process_id" name="process_id" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
             @foreach ($processes as $process)
             @if ($process->process_type == 1 || $process->process_type == 5)
@@ -85,12 +93,20 @@
             @endforeach
         </select>
     </div>
+    <div class="mb-4">
+        <label for="user_id">Pilih User</label>
+        <select name="user_id" id="user_id" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+            @foreach ($person as $user)
+                <option value="{{ $user->user->id }}">{{ $user->user->name }}</option>
+            @endforeach
+        </select>
+    </div>
     
 
 
     <div class="mb-4" id="potongOutput">
         <div>
-            <label for="process_output_material_id" >Material Output</label>
+            <label for="process_output_material_id" >Pilih Output</label>
             <select name="process_output_material_id" id="process_output_material_id" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
                 <option value="0">Potong Baju</option>
                 @foreach ($materials as $material)
@@ -115,27 +131,35 @@
 </form>
 
 
-<h1>Sub Process Table</h1>
+<center>
+    <br><br>
+    <hr class="navbar-divider">
+    <label class="label">Sub Process Table</label>
+    <hr class="navbar-divider">
+</center>
 @foreach ($processes->whereNotIn('process_type',[1]) as $p)
+    <br><br>
     <h1 class=" font-bold">{{ $p->process_name }}</h1>
     <h1>Input Quantity</h1>
     @foreach ($p->processMaterial->where('process_material_status','Input Produksi') as $pm)
-    {{ $pm->process_material_name }}/{{ $pm->process_material_quantity }}; 
-        
+    - {{ $pm->process_material_name }}/{{ $pm->process_material_quantity }} 
+    <br>
     @endforeach
 
     @foreach ($p->subProses->GroupBy('user_id') as $subGroup)
         <div class=" border border-black">
-            <h1 class="">Proses Dikerjaka oleh user{{ $subGroup[0]->user->name }}</h1>
-            <div class="grid grid-cols-8 gap-6">
+            <h1 class="">Proses Dikerjakan oleh user {{ $subGroup[0]->user->name }}</h1>
+            
+            @foreach ($subGroup as $sp)
+            <br>
+            <form action="/subproses/{{ $sp->id }}" method="POST">
+                <div class="grid grid-cols-8 gap-6 font-bold">
                 <h3>Nama Material</h3>
                 <h3>Projected</h3>
                 <h3>Actual</h3>
                 <h3>Sisa</h3>
                 <h3>Ambil</h3>
-            </div>
-            @foreach ($subGroup as $sp)
-            <form action="/subproses/{{ $sp->id }}" method="POST">
+                </div>
                 @csrf
                 @method('PUT')
                 <div class="grid grid-cols-8 gap-6">
@@ -148,7 +172,9 @@
                     <input type="number" name="quantityAmbil" id="quantityAmbil" class=" border border-black" value="0" max="{{ $sp->sub_proses_projected - $sp->sub_proses_actual }}">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-3 rounded font-medium">Update</button>
                     @if (!$sp->subProcessHistories->isEmpty())
-                    <button type="button" class="bg-red-500 text-white px-4 py-3 rounded font-medium" onclick="openDetail($sp->id)">Check Detail</button>
+                    <button type="button" class="bg-red-500 text-white px-4 py-3 rounded font-medium" id="button_{{$sp->id}}" onclick="openDetail({{$sp->id}})"  >Check Detail</button>
+                    
+                    
                     @endif
                     </form>
                     <form action="/subproses/{{ $sp->id }}" method="POST">
@@ -157,8 +183,11 @@
                         <button type="submit" class="bg-red-500 text-white px-4 py-3 rounded font-medium">Delete</button>
                     </form>
                 </div>
-                @if ($sp->subProcessHistories != Null)
-                <div id="detail_{{ $sp->id }}" >
+                <br>
+                <hr class="navbar-divider">
+                @if (!$sp->subProcessHistories->isEmpty())
+                <div id="detail_{{ $sp->id }}" class=" mb-4 hidden">
+                    <h3 class="font-bold">Detail Pengambilan</h3>
                     <div class="grid grid-cols-8 gap-6">
                     
                         <h3>Quantity</h3>
@@ -170,7 +199,7 @@
                             <p>{{ $history->quantity }}</p>
                             <p>{{ $history->created_at }}</p>
                             @if ($history->is_done != 1)
-                            <a href="/subproses/{{ $history->id }}" class="bg-blue-500 text-white px-4 py-3 rounded font-medium">Check</a>
+                            <a href="/subproses/{{ $history->id }}" class="bg-blue-500 text-white px-4 py-3 rounded font-medium" target="_blank">Check</a>
                             <form action="/subproses/history/{{ $history->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -184,7 +213,9 @@
                             @endif
                             
                         </div>
-                        
+                        <br>
+                        <hr class="navbar-divider">
+                        <br>
                     @endforeach
                 </div>
                
@@ -201,6 +232,25 @@
 
 <script src="{{ asset("js/process.js") }}"></script>
 
+<script>
+function closeDetail(id){
+    let detail=document.getElementById('detail_'+id);     
+    detail.classList.add("hidden");
+    
+    let button=document.getElementById('button_'+id);
+    button.onclick = function () { openDetail(id); };
+}
+
+function openDetail(id){
+    let detail=document.getElementById('detail_'+id);     
+    detail.classList.remove("hidden");
+    
+    let button=document.getElementById('button_'+id);
+    button.onclick = function () { closeDetail(id); };
+}
+
+
+</script>
 
     
 

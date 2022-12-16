@@ -79,10 +79,6 @@ class SubProcessResource extends Controller
             'quantity' => $request->quantityAmbil
         ]);
 
-        $subProses = SubProses::find($id);
-        $subProses->sub_proses_actual=$subProses->sub_proses_actual + $request->quantityAmbil;
-        $subProses->save();
-
         return redirect()->back()->with('success', 'Sub Proses Berhasil Diupdate');
 
     }
@@ -138,6 +134,9 @@ class SubProcessResource extends Controller
         $subProsesHistory->is_done=true;
         $subProsesHistory->save();
 
-        return redirect('/production/'.$subproses->process->production_id.'/edit')->with('success', 'Sub Proses Berhasil Diupdate');
+        $subproses->sub_proses_actual=$subproses->sub_proses_actual+$request->quantity;
+        $subproses->save();
+
+        return back()->with('success', 'Sub Proses Berhasil Diupdate');
     }
 }

@@ -3,7 +3,7 @@
     <center>
         <br>
         <hr class="navbar-divider">
-        <h1>Form Material</h1>
+        <label class="label">Form Material</label>
         <hr class="navbar-divider">
         <br>
     </center>
@@ -17,6 +17,7 @@
     @endif
     
     <form action="/material" method="POST" id="createMaterial" class="flex flex-col m-12">
+        
         @csrf
         <label class="label">Material Name</label>
             <div class="control">
@@ -27,24 +28,29 @@
               <textarea class="textarea" name="description" id="description" placeholder="Material Description"></textarea>
             </div>
         <label class="label">Material Quantity</label>
-        <div>
+        <div >
             <input type="number" name="quantity" id="quantity" class="input">
-            <select name="measure_unit" id="measure_unit" class=" ">
+            
+        </div>
+        <label class="label">Material Measure</label>
+        <div>
+            <select name="measure_unit" id="measure_unit" class="input">
                 <option value="kg">kg</option>
                 <option value="l">l</option>
                 <option value="m">m</option>
                 <option value="piece">piece</option>
             </select>
         </div>
-        <label class="label">Material</label>
-            <div class="control">
-              <div class="select" name="type" id="type">
-                <select>
-                    <option value="Raw Material">Raw</option>
-                    <option value="Finished">Finished</option>
-                </select>
-              </div>
-            </div>
+        
+        <!--<label class="label">Material</label>-->
+        <!--    <div class="control">-->
+        <!--      <div class="select" name="type" id="type">-->
+        <!--        <select>-->
+        <!--            <option value="Raw Material" selected>Raw</option>-->
+        <!--            <option value="Finished">Finished</option>-->
+        <!--        </select>-->
+        <!--      </div>-->
+        <!--    </div>-->
         <br>
         <button type="submit" class="button green">Submit</button>
     </form>

@@ -14,7 +14,7 @@ class MaterialResource extends Controller
      */
     public function index()
     {
-        $materials = Material::all();
+        $materials = Material::where('material_type','!=','semi-finished')->get();
         return view('material.indexMaterial', compact('materials'));
     }
 
@@ -36,20 +36,20 @@ class MaterialResource extends Controller
      */
     public function store(Request $request)
     {
+
         $validated=$request->validate([
             'name' => 'required',
             'description' => 'required',
             'quantity' => 'required',
             'measure_unit' => 'required',
-            'type' => 'required',
         ]);
-
+        
         $data=[
             'material_name' => $validated['name'],
             'material_description' => $validated['description'],
             'material_quantity' => $validated['quantity'],
             'material_measure_unit' => $validated['measure_unit'],
-            'material_type' => $validated['type'],
+            'material_type' => "Raw Material",
         ];
 
         Material::create($data);
@@ -92,7 +92,7 @@ class MaterialResource extends Controller
             'description' => 'required',
             'quantity' => 'required',
             'measure_unit' => 'required',
-            'type' => 'required',
+
         ]);
 
         $data=[
@@ -100,7 +100,7 @@ class MaterialResource extends Controller
             'material_description' => $validated['description'],
             'material_quantity' => $validated['quantity'],
             'material_measure_unit' => $validated['measure_unit'],
-            'material_type' => $validated['type'],
+            'material_type' => "Raw Material",
         ];
 
         $material->update($data);

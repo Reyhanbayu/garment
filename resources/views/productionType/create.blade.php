@@ -1,6 +1,12 @@
 @extends('layouts.main')
 @section('container')
-<h1>Create Production Type</h1>
+<center>
+    <br>
+    <hr class="navbar-divider">
+    <label class="label">Create Production Type</label>
+    <hr class="navbar-divider">
+    <br>
+</center>
 
 <Form method="POST" action="/productiontype" >
     @csrf

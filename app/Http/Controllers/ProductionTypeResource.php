@@ -114,13 +114,21 @@ class ProductionTypeResource extends Controller
         foreach($productionProcessType as $process){
             $process->delete();
         }
-
+        production_process_type::create([
+                'production_type_id'=>$id,
+                'process_type_id'=>1,
+            ]);
+            
         foreach ($validated['process'] as $process) {
             production_process_type::create([
                 'production_type_id'=>$id,
                 'process_type_id'=>$process,
             ]);
         }
+        production_process_type::create([
+                'production_type_id'=>$id,
+                'process_type_id'=>5,
+            ]);
 
         return redirect('/process');
 

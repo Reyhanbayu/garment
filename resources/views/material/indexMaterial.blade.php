@@ -4,7 +4,7 @@
     <center>
         <br>
         <hr class="navbar-divider">
-        <h1>Tabel Material</h1>
+        <label class="label">Tabel Material</label>
         <hr class="navbar-divider">
         <br>
     </center>
@@ -40,7 +40,7 @@
                     <td class="border px-4 py-2">{{ $material->material_type }}</td>
                     <td class="border px-4 py-2">
                         <a href="/material/{{ $material->id }}/edit" class="bg-blue-500 text-white p-2">Edit</a>
-                        <form action="/material/{{ $material->id }}" method="POST" class="inline">
+                        <form action="/material/{{ $material->id }}" method="POST" class="inline" onsubmit="return confirm('are you sure?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-500 text-white p-2">Delete</button>

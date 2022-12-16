@@ -103,14 +103,14 @@ select.addEventListener('change', (e) => {
     if (select.value == "0") {
         ukuranBagian.classList.remove('hidden');
         ukuranBagian.classList.add('flex');
-        input.classList.remove('hidden');
-        input.classList.add('flex');
+        input.classList.remove('flex');
+        input.classList.add('hidden');
     }
     else {
         ukuranBagian.classList.add('hidden');
         ukuranBagian.classList.remove('flex');
-        input.classList.remove('hidden');
         input.classList.add('flex');
+        input.classList.remove('hidden');
     }
 });
 
@@ -129,5 +129,55 @@ function printExternal(url) {
         }
     }, true);
 }
+
+const selectprocessid= document.querySelector('select#process_id');
+console.log(selectprocessid);
+const selectuserid= document.querySelector('select#user_id');
+selectprocessid.addEventListener('change', (e) => {
+    //api request
+    const response = fetch(`/api/process/${selectprocessid.value}`, {
+        method: 'GET',
+    }
+    ).then(response => response.json());
+    response.then(data => {
+        console.log(data);
+        //if data empty
+        if (data.length == 0) {
+            selectuserid.innerHTML = ``;
+            selectuserid.innerHTML = `<option value="0">No User</option>`;
+            //alert to hyperlink to add user
+            confirms=confirm("No User Found. Do you want to add user?");
+            if (confirms==true) {
+                window.location.href = '/user/create';
+            }
+        }
+        else {
+            selectuserid.innerHTML = ``;
+            data.forEach(element => {
+                selectuserid.innerHTML += `<option value="${element.id}">${element.name}</option>`;
+            });
+        }
+    });
+    //if selected first option
+    if (selectprocessid.selectedIndex == 0) {
+        select.options[0].selected = true;
+        select.options[0].disabled = false;
+        ukuranBagian.classList.remove('hidden');
+        ukuranBagian.classList.add('flex');
+        input.classList.add('hidden');
+        input.classList.remove('flex');
+    }
+    else {
+        select.options[1].selected = true;
+        select.options[0].disabled = true;
+        ukuranBagian.classList.add('hidden');
+        ukuranBagian.classList.remove('flex');
+        input.classList.remove('hidden');
+        input.classList.add('flex');
+    
+    }
+
+});
+
 
 

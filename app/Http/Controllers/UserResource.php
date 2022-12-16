@@ -100,7 +100,7 @@ class UserResource extends Controller
 
         $validated= $request->validate([
             'name'=>'required',
-            'process'=>'array|required',
+            'role'=>'array|required',
         ]);
         if($request->email != null && $request->password != null){
             $user->update([
@@ -116,10 +116,10 @@ class UserResource extends Controller
             ]);
         }
         PersonProcess::where('user_id',$user->id)->delete();
-        foreach($request->process as $role){
+        foreach($request->role as $roles){
             PersonProcess::create([
                 'user_id'=>$user->id,
-                'process_type_id'=>$role,
+                'process_type_id'=>$roles,
             ]);
         }
         return redirect('/process')->with('success','User berhasil diupdate');

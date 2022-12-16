@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\bagian;
 use App\Models\bagian_baju;
+use App\Models\colour;
 use App\Models\Material;
 use App\Models\Person;
 use App\Models\PersonProcess;
@@ -32,21 +33,21 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Material::create([
-            'material_name' => 'Fabric',
-            'material_description' => 'Fabric is a material made of a network of natural or artificial fibres',
-            'material_quantity' => 20,
-            'material_measure_unit' => 'm',
-            'material_type'=>'Raw Material',
-        ]);
+        // Material::create([
+        //     'material_name' => 'Fabric',
+        //     'material_description' => 'Fabric is a material made of a network of natural or artificial fibres',
+        //     'material_quantity' => 20,
+        //     'material_measure_unit' => 'm',
+        //     'material_type'=>'Raw Material',
+        // ]);
 
-        Material::create([
-            'material_name' => 'Thread',
-            'material_description' => 'Thread is a type of yarn used for sewing by hand or machine',
-            'material_quantity' => 100,
-            'material_measure_unit' => 'm',
-            'material_type'=>'Raw Material',
-        ]);
+        // Material::create([
+        //     'material_name' => 'Thread',
+        //     'material_description' => 'Thread is a type of yarn used for sewing by hand or machine',
+        //     'material_quantity' => 100,
+        //     'material_measure_unit' => 'm',
+        //     'material_type'=>'Raw Material',
+        // ]);
 
         $ukuran=[
             'S',
@@ -79,8 +80,9 @@ class DatabaseSeeder extends Seeder
             'Production',
             'Potong',
             'Jahit',
-            'Obras',
+            'Setrika',
             'Finishing',
+            'Payet'
         ];
 
         foreach ($processType as $item) {
@@ -88,58 +90,58 @@ class DatabaseSeeder extends Seeder
                 'process_type_name' => $item,
             ]);
         }
-        production_type::create([
-            'production_type_name' => 'Atasan',
-        ]);
+        // production_type::create([
+        //     'production_type_name' => 'Atasan',
+        // ]);
 
-        production_type::create([
-            'production_type_name' => 'Bawahan',
-        ]);
+        // production_type::create([
+        //     'production_type_name' => 'Bawahan',
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 1,
-            'process_type_id' => 1,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 1,
+        //     'process_type_id' => 1,
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 1,
-            'process_type_id' => 2,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 1,
+        //     'process_type_id' => 2,
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 1,
-            'process_type_id' => 3,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 1,
+        //     'process_type_id' => 3,
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 1,
-            'process_type_id' => 5,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 1,
+        //     'process_type_id' => 5,
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 2,
-            'process_type_id' => 1,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 2,
+        //     'process_type_id' => 1,
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 2,
-            'process_type_id' => 2,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 2,
+        //     'process_type_id' => 2,
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 2,
-            'process_type_id' => 3,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 2,
+        //     'process_type_id' => 3,
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 2,
-            'process_type_id' => 4,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 2,
+        //     'process_type_id' => 4,
+        // ]);
 
-        production_process_type::create([
-            'production_type_id' => 2,
-            'process_type_id' => 5,
-        ]);
+        // production_process_type::create([
+        //     'production_type_id' => 2,
+        //     'process_type_id' => 5,
+        // ]);
 
         User::create([
             'name' => 'Admin',
@@ -147,44 +149,54 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
 
-        User::create([
-            'name' => 'Raka',
-            'email' => 'Raka@gmail.com',
-            'password' => bcrypt('123'),
-        ]);
+        // User::create([
+        //     'name' => 'Raka',
+        //     'email' => 'Raka@gmail.com',
+        //     'password' => bcrypt('123'),
+        // ]);
 
-        User::create([
-            'name' => 'Rizki',
-            'email' => 'Rizki@gmail.com',
-            'password' => bcrypt('123'),
-        ]);
+        // User::create([
+        //     'name' => 'Rizki',
+        //     'email' => 'Rizki@gmail.com',
+        //     'password' => bcrypt('123'),
+        // ]);
 
-        PersonProcess::create([
-            'user_id' => 2,
-            'process_type_id' => 1,
-        ]);
+        // PersonProcess::create([
+        //     'user_id' => 2,
+        //     'process_type_id' => 1,
+        // ]);
 
 
-        PersonProcess::create([
-            'user_id' => 3,
-            'process_type_id' => 2,
-        ]);
+        // PersonProcess::create([
+        //     'user_id' => 3,
+        //     'process_type_id' => 2,
+        // ]);
 
-        PersonProcess::create([
-            'user_id' => 2,
-            'process_type_id' => 3,
-        ]);
+        // PersonProcess::create([
+        //     'user_id' => 2,
+        //     'process_type_id' => 3,
+        // ]);
         
-        PersonProcess::create([
-            'user_id' => 3,
-            'process_type_id' => 4,
-        ]);
+        // PersonProcess::create([
+        //     'user_id' => 3,
+        //     'process_type_id' => 4,
+        // ]);
 
-        PersonProcess::create([
-            'user_id' => 2,
-            'process_type_id' => 5,
-        ]);
+        // PersonProcess::create([
+        //     'user_id' => 2,
+        //     'process_type_id' => 5,
+        // ]);
 
+        //read csv
+        $colourcsv = array_map('str_getcsv', file('database/seeders/color_names.csv'));
+        $colourcsv = array_slice($colourcsv, 1);
+        foreach ($colourcsv as $key => $value) {
+            $color = new colour();
+            $color->colour_name = $value[0];
+            $color->colour_code = $value[1];
+            $color->save();
+        }
+        
 
 
 

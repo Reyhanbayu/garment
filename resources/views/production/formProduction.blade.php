@@ -1,12 +1,12 @@
 @extends('layouts.main')
 @section('container')
-<center>
-    <br>
-    <hr class="navbar-divider">
-    <h1>Form Produksi</h1>
-    <hr class="navbar-divider">
-    <br>
-</center>
+    <center>
+        <br>
+        <hr class="navbar-divider">
+        <label class="label">Form Produksi</label>
+        <hr class="navbar-divider">
+        <br>
+    </center>
     {{-- {!! QrCode::size(100)->generate(Request::url()); !!} --}}
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -35,20 +35,19 @@
         <textarea class="textarea" name="description" id="description" placeholder="Production Description"></textarea>
         <label for="end_date" class="label">Production End Date</label>
         <input type="date" name="end_date" id="end_date" class="border border-gray-400 p-2" value="{{ date('Y-m-d') }}">
-        <div class="flex">
+        <div class="flex mt-2">
             <div class="label">Material</div>
-            <button id="materialButton" type="button" class="bg-blue-500 p-2 mx-4">Add</button>
-            <input type="hidden" name="totalMaterial" id="totalMaterial" value="1">
+
         </div>
         <div class="materialContainer">
-            <div class="flex">
-                <div class="flex flex-col">
-                    <label for="input_quantity" class="label">Input Quantit Material 1</label>
-                    <input type="number" name="input_quantity_1" id="input_quantity_1" class="border border-gray-400 p-2" value="0" min="0">
+            <div class="flex h-20">
+                <div class="flex flex-col w-1/3">
+                    <label for="input_quantity" class="label">Quantity Material</label>
+                    <input type="number" name="input_quantity_1" id="input_quantity_1" class="border border-gray-400 rounded-sm p-3 h-12" min="0" value="{{ $materials[0]->material_quantity }}">
                 </div>
-                <div class="flex flex-col">
-                    <label for="material_id" class="label">Material Type 1</label>
-                    <select name="material_id_1" id="material_id_1" class="border border-gray-400 p-2">
+                <div class="flex flex-col w-2/3">
+                    <label for="material_id" class="label">Material Type</label>
+                    <select name="material_id_1" id="material_id_1" class="border border-gray-400 rounded-sm p-3 h-12" onchange="inputQuantity(1)">
                         @foreach ($materials as $material)
                             <option value="{{ $material->id }}">{{ $material->material_name }}</option>
                         @endforeach
@@ -56,8 +55,11 @@
                 </div>
                 
             </div>
+
         </div>
-        <label for="output_quantity" class="label">Projected Output</label>
+        <button id="materialButton" type="button" class="bg-blue-500 w-full m-0 p-2 text-white rounded-sm">Add</button>
+        <input type="hidden" name="totalMaterial" id="totalMaterial" value="1">
+        <label for="output_quantity" class="label mt-2">Projected Output</label>
         <div class="flex">
             @foreach ($ukurans as $ukuran)
             <div class="flex flex-col">

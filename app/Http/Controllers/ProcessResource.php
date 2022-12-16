@@ -25,7 +25,7 @@ class ProcessResource extends Controller
      */
     public function index()
     {
-        $processTypes = process_type::all();
+        $processTypes = process_type::whereNotIn('id',[1,5])->get();
         $productionProcessTypes= production_process_type::all()->groupBy('production_type_id');
         $personProcesses= PersonProcess::all()->groupBy('user_id');
 
@@ -121,7 +121,7 @@ class ProcessResource extends Controller
                     
                     $matLast=Material::create([
                         'material_name'=>$processMaterial->process_material_name,
-                        'material_description'=>$processMaterial->process_material_name." ".$request->production_id,
+                        'material_description'=>$processMaterial->process_material_name." ".Production::find($request->production_id)->production_name,
                         'material_measure_unit'=>'pcs',
                         'material_quantity'=>0,
                         'material_type'=>'Produk',

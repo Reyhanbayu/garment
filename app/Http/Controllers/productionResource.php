@@ -102,6 +102,10 @@ class productionResource extends Controller
                 'process_material_status' => 'Input Produksi',
             ];
             processMaterial::create($processMaterial);
+            
+            $mts=Material::find($request['material_id_'.$i]);
+            $mts->material_quantity=$mts->material_quantity-$request['input_quantity_'.$i];
+            $mts->save();
         }
 
 
@@ -170,8 +174,8 @@ class productionResource extends Controller
         $processMaterials=processMaterial::whereIn('process_id', $processes->pluck('id'))->get();
         $bagianBaju=bagian_baju::where('production_id', $production->id)->where('bagian_id',"!=",5)->get();
         $ukuranBagian=Material::whereIn('bagian_baju_id',$bagianBaju->pluck('id'))->get();
-        $materials = Material::whereIn('id', $processMaterials->pluck('material_id'))->whereNotIn('id',$ukuranBagian->pluck('id'))->get();
-        $person=PersonProcess::all()->groupBy('user_id');
+        $materials = Material::whereIn('id', $processMaterials->pluck('material_id'))->whereNotIn('id',$ukuranBagian->pluck('id'))->whereNotIn('material_type',['Produk','Raw Material'])->get();
+        $person=PersonProcess::where('process_type_id',2)->get();
 
         
         
@@ -192,7 +196,24 @@ class productionResource extends Controller
      */
     public function update(Request $request, Production $production)
     {
-        dd($request);
+        $validated = $request->validate([
+            'production_name' => 'required',
+            'production_description' => 'required',
+            'production_type' => 'required',
+            'production_projected_end_date' => 'required',
+        ]);
+
+        $production->production_name = $validated['production_name'];
+        $production->production_description = $validated['production_description'];
+        $production->production_type = $validated['production_type'];
+        $production->production_projected_end_date = $validated['production_projected_end_date'];
+
+        $production->save();
+
+        return redirect("/production/".$production->id."/edit")->with('success', 'Production updated successfully.');
+
+
+        
     }
 
     /**

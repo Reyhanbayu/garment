@@ -3,7 +3,7 @@
     <center>
         <br>
         <hr class="navbar-divider">
-        <h1>Form Material</h1>
+        <label class="label">Form Material</label>
         <hr class="navbar-divider">
         <br>
     </center>
@@ -22,22 +22,23 @@
         <label class="label">Material Quantity</label>
         <div>
             <input type="number" name="quantity" id="quantity" class="input" value="{{ $material->material_quantity }}">
-            <select name="measure_unit" id="measure_unit" class=" ">
+            
+        </div>
+        <label class="label">Material Measures</label>
+        <select name="measure_unit" id="measure_unit" class="input">
                 <option value="kg" {{ $material->material_measure_unit == 'kg' ? 'selected' : '' }}>kg</option>
                 <option value="l" {{ $material->material_measure_unit == 'l' ? 'selected' : '' }}>l</option>
                 <option value="m" {{ $material->material_measure_unit == 'm' ? 'selected' : '' }}>m</option>
                 <option value="piece" {{ $material->material_measure_unit == 'piece' ? 'selected' : '' }}>piece</option>
             </select>
-        </div>
-        <label class="label">Material</label>
-            <div class="control">
-              <div class="select" name="type" id="type">
-                <select>
-                    <<option value="Raw Material" {{ $material->material_type == 'Raw Material' ? 'selected' : '' }}>Raw</option>
-                    <option value="Finished" {{ $material->material_type == 'Finished' ? 'selected' : '' }}>Finished</option>
-                </select>
-              </div>
-            </div>
+            <!--<div class="control">-->
+            <!--  <div class="select" name="type" id="type">-->
+            <!--    <select>-->
+            <!--        <<option value="Raw Material" {{ $material->material_type == 'Raw Material' ? 'selected' : '' }}>Raw</option>-->
+            <!--        <option value="Finished" {{ $material->material_type == 'Finished' ? 'selected' : '' }}>Finished</option>-->
+            <!--    </select>-->
+            <!--  </div>-->
+            <!--</div>-->
         <br>
         <button type="submit" class="button green">Submit</button>
     </form>
