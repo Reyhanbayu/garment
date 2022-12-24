@@ -38,29 +38,12 @@
         <label class="label">Material Quantity</label>
         <div class="flex">
             <input type="number" name="quantity" id="quantity" class="input">
-<<<<<<< HEAD
             <div>
                 <select name="measure_unit" id="measure_unit" class="input">
                     <option value="kg">kg</option>
                     <option value="l">l</option>
                     <option value="m">m</option>
                     <option value="piece">piece</option>
-=======
-            <br>
-            <select name="measure_unit" id="measure_unit" class="input">
-                <option value="kg">kg</option>
-                <option value="l">l</option>
-                <option value="m">m</option>
-                <option value="piece">piece</option>
-            </select>
-        </div>
-        <label class="label">Material</label>
-            <div class="control">
-              <div class="select" name="type" id="type">
-                <select>
-                    <option value="Raw Material">Raw</option>
-                    <option value="Finished">Finished</option>
->>>>>>> 0a7e8d57910934ea413da2993820286648752b49
                 </select>
             </div>
         </div>

@@ -35,10 +35,7 @@
         <label for="production_description" >Description</label>
         <input type="text" name="production_description" id="production_description" placeholder="Description" class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="{{ $production->production_description }}">
     </div>
-<<<<<<< HEAD
     
-=======
->>>>>>> 0a7e8d57910934ea413da2993820286648752b49
     <div class="mb-4">
     <label for="production_type" >Type</label>
     <select name="production_type" id="production_type" class="bg-gray-100 border-2 w-full p-4 rounded-lg">

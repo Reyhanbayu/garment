@@ -2,21 +2,12 @@
 
 @section('container')
 
-<<<<<<< HEAD
 <center>
     <hr class="navbar-divider">
     <label class="label">Table Process</label>
     <hr class="navbar-divider">
     <br>
 </center>
-=======
-    <center>
-        <hr class="navbar-divider">
-        <h1>Table Process</h1>
-        <hr class="navbar-divider">
-        <br>
-    </center>
->>>>>>> 0a7e8d57910934ea413da2993820286648752b49
 
 <div class="">
     

@@ -4,11 +4,7 @@
 <center>
     <br>
     <hr class="navbar-divider">
-<<<<<<< HEAD
     <label class="label">Create User</label>
-=======
-    <label class="label">Form Material</label>
->>>>>>> 0a7e8d57910934ea413da2993820286648752b49
     <hr class="navbar-divider">
     <br>
 </center>
