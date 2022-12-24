@@ -8,6 +8,7 @@
         <hr class="navbar-divider">
         <br>
     </center>
+<<<<<<< HEAD
     <div class="mb-5 flex flex-row justify-between">
         <div class="flex flex-row w-1/3">
             <select name="category" id="selectType" class=" border border-gray-400 p-2">
@@ -25,6 +26,10 @@
             
         </div>
         
+=======
+
+    <div class="mb-5">
+>>>>>>> 0a7e8d57910934ea413da2993820286648752b49
         <a href="/material/create" class="bg-blue-500 text-white px-4 py-3 rounded font-medium">Tambah Material</a>
         
     </div>

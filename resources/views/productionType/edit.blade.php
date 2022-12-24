@@ -19,6 +19,25 @@
                 {{ $message }}
             </div>
         @enderror
+<<<<<<< HEAD
+=======
+    </div>
+        <div class="mb-4">
+            <label for="role" class="sr-only">Role</label>
+            <div class="flex">
+                @foreach ($processTypes as $process)
+                    @if (in_array($process->id, $productionType->production_process->pluck('process_type_id')->toArray()))
+                        <label for="process">{{ $process->process_type_name }}</label>
+                        <input type="checkbox" name="process[]" value="{{ $process->id }}" class="bg-gray-100 border-2 w-full p-4 rounded-lg" checked>
+                    @else
+                        <label for="process">{{ $process->process_type_name }}</label>
+                        <input type="checkbox" name="process[]" value="{{ $process->id }}" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+                @endif
+            @endforeach
+            </div>
+        </div>
+
+>>>>>>> 0a7e8d57910934ea413da2993820286648752b49
     </div>
         <div class="mb-4">
             <label for="role" class="sr-only">Role</label>

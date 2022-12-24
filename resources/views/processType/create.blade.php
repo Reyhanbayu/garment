@@ -7,6 +7,10 @@
     <hr class="navbar-divider">
     <br>
 </center>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0a7e8d57910934ea413da2993820286648752b49
 <Form method="POST" action="/processtype" >
     @csrf
     <div class="mb-4">
