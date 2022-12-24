@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bagian_bajus', function (Blueprint $table) {
+        Schema::create('material_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bagian_id')->constrained('bagians')->onDelete('cascade');
-            $table->foreignId('ukuran_id')->constrained('ukurans')->onDelete('cascade');
-            $table->foreignId('colour_id');
-            $table->foreignId('production_id')->constrained('productions')->onDelete('cascade');
+            $table->foreignId('material_id');
+            $table->integer('quantity');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bagian_bajus');
+        Schema::dropIfExists('material_histories');
     }
 };

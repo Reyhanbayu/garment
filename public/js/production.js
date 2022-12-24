@@ -5,47 +5,233 @@ const totalMaterial = document.getElementById('totalMaterial');
 materialButton.addEventListener('click', () => {
 
     totalMaterial.value = parseInt(totalMaterial.value) + 1;
-  const materialForm = document.createElement('div');
-  materialForm.classList.add('flex');
+    const materialForm = document.createElement('div');
+    materialForm.classList.add('flex');
     materialForm.innerHTML = `
-        <div class="flex flex-col w-1/3">
-            <input type="number" name="input_quantity_`+totalMaterial.value+`" id="input_quantity_`+totalMaterial.value+`" class="border border-gray-400 rounded-sm p-3 h-12" value="0" min="0">
-        </div>
-        <div class="flex flex-col w-2/3">
-            <select name="material_id_`+totalMaterial.value+`" id="material_id_`+totalMaterial.value+`" class="border border-gray-400 rounded-sm p-3 h-12" onchange="inputQuantity(`+totalMaterial.value+`)">
-            </select>
+    <div class="flex flex-col w-3/4">
+            <div class=" w-full flex flex-row">
+                <select name="category" id="selectType_${totalMaterial.value}" class=" border border-gray-400 p-3 m-0 w-1/3" onchange="changeSubtype(${totalMaterial.value})">
+                    <option value="0" selected>Select to filter by Category...</option>
+                    @foreach ($materialCategory as $category)
+                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                        
+                    @endforeach
+                </select>
 
-        </div> 
-    `
-    const response = fetch(`/api/material/quantity/1`, {
-        method: 'GET',
-    }
-    ).then(response => response.json());
-    response.then(data => {
-      let input = document.querySelector('input#input_quantity_'+totalMaterial.value);
-      input.value=data;
-    })
+                <select name="type" id="selectSubType_${totalMaterial.value}" class="border border-gray-400 p-3 m-0 w-1/3" disabled>
+                    <option value="0">Please select category first...</option>
+                </select>
+                <select name="material_id_${totalMaterial.value}" id="material_id_${totalMaterial.value}" class="border border-gray-400 rounded-sm p-3 h-12 w-1/3" disabled>
+                    <option value="0" selected>Select subcategory first...</option>
+                </select>
+            </div>
+        </div>
+        <div class="flex flex-col w-1/4">
+            <input type="number" name="input_quantity_${totalMaterial.value}" id="input_quantity_${totalMaterial.value}" class="border border-gray-400 rounded-sm p-3 h-12" min="0" >
+        </div>
+    </div>
+</div>
+    `;
     materialContainer.appendChild(materialForm);
-    const selectMaterial1 = document.querySelector('select#material_id_1');
-    const selectMaterial2 = document.querySelector('select#material_id_'+totalMaterial.value);
-    selectMaterial2.innerHTML = selectMaterial1.innerHTML;
+
+    // const response = fetch(`/api/material/quantity/1`, {
+    //     method: 'GET',
+    // }
+    // ).then(response => response.json());
+    // response.then(data => {
+    //   let input = document.querySelector('input#input_quantity_'+totalMaterial.value);
+    //   input.value=data;
+    // })
+    // materialContainer.appendChild(materialForm);
+    const selectType1 = document.querySelector('select#selectType_1');
+    const selectType2 = document.querySelector('select#selectType_'+totalMaterial.value);
+    selectType2.innerHTML = selectType1.innerHTML;
     
 });
 
-function inputQuantity(count){
-    let selectMaterial = document.querySelector('select#material_id_'+count);
-    let inputMaterial = document.querySelector('input#input_quantity_'+count);
+// function inputQuantity(count){
+//     let selectMaterial = document.querySelector('select#material_id_'+count);
+//     let inputMaterial = document.querySelector('input#input_quantity_'+count);
 
 
-    console.log(selectMaterial.value);
-    console.log(inputMaterial)
+//     console.log(selectMaterial.value);
+//     console.log(inputMaterial)
 
-    const response = fetch(`/api/material/quantity/${selectMaterial.value}`, {
-        method: 'GET',
-    }
+//     const response = fetch(`/api/material/quantity/${selectMaterial.value}`, {
+//         method: 'GET',
+//     }
+//     ).then(response => response.json());
+//     response.then(data => {
+//         inputMaterial.value=data
+//     }
+//     )
+// }
+
+const colorSearch = document.querySelector('input#colorSearch');
+const colorList = document.querySelector('div#colorList');
+
+colorSearch.addEventListener('keyup', () => {
+    //remove inner color list
+    colorList.innerHTML = '';
+    // fetch
+    const response = fetch(`/api/colour/search?colour_name=${colorSearch.value}`, 
+    { method: 'GET' }
     ).then(response => response.json());
+
     response.then(data => {
-        inputMaterial.value=data
-    }
-    )
+        colorList.innerHTML = '';
+        //display 5 result
+
+        if (data.length > 5) {
+            for (let i = 0; i < 5; i++) {
+                colorList.innerHTML += `<button type="button" class="flex items-center justify-between w-full" onclick="selectColor(${data[i].id})">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 rounded-full mr-3" style="background-color: ${data[i].colour_code}"></div>
+                        <div class="text-sm">${data[i].colour_name}</div>
+                    </div>
+                </button>`;
+
+            }
+            colorList.innerHTML += `<div class="flex items-center justify-between"> 
+                <div class="flex items
+                -center">
+                    <div class="w-6 h-6 rounded-full mr-3" style="background-color: #fff"></div>
+                    <div class="text-sm font-bold">There are any other color please specify</div>
+                </div>`;
+    
+
+        }
+        else {
+            for (let i = 0; i < data.length; i++) {
+                colorList.innerHTML += `<button type="button" class="flex items-center justify-between" onclick="selectColor(${data[i].id})">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 rounded-full mr-3" style="background-color: ${data[i].colour_code}"></div>
+                        <div class="text-sm">${data[i].colour_name}</div>
+                    </div>
+                </button>`;
+            }
+        }
+
+
+        
+    })
+
+
+});
+let placeholder = document.querySelector('div#placeholderInput');
+function selectColor(id) {
+    const response = fetch(`/api/colour/${id}`, 
+    { method: 'GET' }
+    ).then(response => response.json());
+
+    response.then(data => {
+        console.log(data);
+
+        //create label for child 
+        let label = document.createElement('label');
+        label.setAttribute('for', 'colour_id');
+        label.innerHTML = `<div class="w-6 h-6 rounded-full mr-3" style="background-color: ${data.colour_code}"></div>
+        <div class="text-sm">${data.colour_name}</div>`
+        label.classList.add('flex');
+        placeholder.appendChild(label);
+
+        //place output on placeholder
+        let output=document.createElement('div');
+        output.classList.add('flex');
+        output.classList.add('w-full');
+        output.innerHTML = `
+        <input type="hidden" name="colour_id[]" value="${data.id}">
+        <div class="flex flex-col">
+        <label for="output_quantity">S</label>
+        <input type="number" name="output_quantity[]" id="output_quantity[]" class="border border-gray-400 rounded-sm p-3 h-12" value="0" min="0">
+        <input type="hidden" name="ukuran_id[]" value="1">
+        </div>
+        <div class="flex flex-col">
+        <label for="output_quantity">M</label>
+        <input type="number" name="output_quantity[]" id="output_quantity[]" class="border border-gray-400 rounded-sm p-3 h-12" value="0" min="0">
+        <input type="hidden" name="ukuran_id[]" value="2">
+        </div>
+        <div class="flex flex-col">
+        <label for="output_quantity">L</label>
+        <input type="number" name="output_quantity[]" id="output_quantity[]" class="border border-gray-400 rounded-sm p-3 h-12" value="0" min="0">
+        <input type="hidden" name="ukuran_id[]" value="3">
+        </div>
+        <div class="flex flex-col">
+        <label for="output_quantity">XL</label>
+        <input type="number" name="output_quantity[]" id="output_quantity[]" class="border border-gray-400 rounded-sm p-3 h-12" value="0" min="0">
+        <input type="hidden" name="ukuran_id[]" value="4">
+        </div>
+        <div class="flex flex-col">
+        <label for="output_quantity">XXL</label>
+        <input type="number" name="output_quantity[]" id="output_quantity[]" class="border border-gray-400 rounded-sm p-3 h-12" value="0" min="0">
+        <input type="hidden" name="ukuran_id[]" value="5">
+        </div>
+        
+        
+        `;
+        placeholder.appendChild(output);
+
+        colorList.innerHTML = '';
+        colorSearch.value = '';
+
+
+        
+    })
 }
+
+
+
+
+function changeSubtype(id) {
+    const selectType = document.querySelector(`select#selectType_${id}`);
+    const selectSubType = document.querySelector(`select#selectSubType_${id}`);
+    const selectMaterial= document.querySelector(`select#material_id_${id}`);
+
+    if (selectSubType.hasAttribute('disabled')) {
+        selectSubType.removeAttribute('disabled') 
+    }
+
+    //fetch to subcategory
+    fetch(`/api/subcategory/${selectType.value}`)
+        .then(response => response.json())
+        .then(data => {
+
+            //change options selected
+            selectSubType.innerHTML = '';
+            const option = document.createElement('option');
+            option.value = '0';
+            option.textContent = 'Select Subcategory';
+            selectSubType.appendChild(option);
+            data.forEach(subcategory => {
+                const option = document.createElement('option');
+                option.value = subcategory.id;
+                option.textContent = subcategory.sub_category_name;
+                selectSubType.appendChild(option);
+            });
+
+            selectSubType.addEventListener('change', function() {
+                fetch(`/api/material/subcategory/${selectSubType.value}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (selectMaterial.hasAttribute('disabled')) {
+                            selectMaterial.removeAttribute('disabled')
+                        }
+                            
+                        selectMaterial.innerHTML = '';
+                        const option = document.createElement('option');
+                        option.value = '0';
+                        option.textContent = 'Select Material';
+                        selectMaterial.appendChild(option);
+                        data.forEach(material => {
+                            const option = document.createElement('option');
+                            option.value = material.id;
+                            option.textContent = material.material_name;
+                            selectMaterial.appendChild(option);
+                        });
+                    });
+
+            });
+
+        });
+    selectSubType
+};

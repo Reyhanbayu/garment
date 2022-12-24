@@ -58,6 +58,7 @@
                 </ul>
                 @endforeach</td>
                 <td class="border px-4 py-2">
+                    <a href="/production/{{ $production->id }}" class="bg-green-500 text-white p-2">Detail</a>
                     <a href="/production/{{ $production->id }}/edit" class="bg-blue-500 text-white p-2">Edit</a>
                     <form action="/production/{{ $production->id }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
                         @csrf

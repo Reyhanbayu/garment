@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\colour;
 use App\Models\Material;
+use App\Models\MaterialCategory;
+use App\Models\MaterialSubCategory;
 use App\Models\PersonProcess;
 use App\Models\Process;
 use App\Models\User;
@@ -24,7 +26,10 @@ class ApiController extends Controller
         $user= User::whereIn('id',$userid)->get();
         return response()->json($user);
     }
-
+    public function getMaterialBySubCategory($id){
+        $material= Material::where('material_sub_category_id',$id)->get();
+        return response()->json($material);
+    }
     public function getMaterialQuantity($id){
         $material=Material::find($id);
         return response($material->material_quantity);
@@ -35,5 +40,33 @@ class ApiController extends Controller
         $colours= colour::where('colour_name','like','%'.$colour.'%')->get();
         return response()->json($colours);
     }
+
+    public function getColour($id){
+        $colour= colour::find($id);
+        return response()->json($colour);
+    }
+
+    public function getSubCategory($id){
+        $materialSubCategory= MaterialSubCategory::where('material_category_id',$id)->get();
+        return response()->json($materialSubCategory);
+    }
+
+    public function postSubCategory(Request $request){
+        $subcategory=MaterialSubCategory::create([
+              'sub_category_name' => $request->sub_category_name,
+              'material_category_id' => $request->category_id,
+       ]);
+        return response()->json($subcategory);
+
+
+    }
+
+    public function getMaterialByCategory($id){
+        $materialSubCategory= MaterialSubCategory::where('material_category_id',$id)->get();
+        $material= Material::whereIn('material_sub_category_id',$materialSubCategory->pluck('id'))->get();
+        return response()->json($material);
+    }
+
+    
 
 }

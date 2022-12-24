@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\bagian_baju;
 use App\Models\Material;
+use App\Models\MaterialSubCategory;
 use App\Models\PersonProcess;
 use App\Models\Process;
 use App\Models\process_type;
@@ -12,6 +13,7 @@ use App\Models\Production;
 use App\Models\production_process_type;
 use App\Models\production_type;
 use App\Models\SubProses;
+use App\Models\User;
 use Illuminate\Http\Request;
 use PDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -94,7 +96,7 @@ class ProcessResource extends Controller
                         'process_material_id'=>$processMaterial->id,
                         'process_id'=>$request->process_id,
                         'user_id'=>$request->user_id,
-                        'sub_proses_name'=>"User".$request->user_id." ".$processMaterial->process_material_name,
+                        'sub_proses_name'=>$processMaterial->process_material_name." Pegawai ".User::find($request->user_id)->name,
                         'sub_proses_projected'=>$request['process_output_bagian_'.$ukuran->id],
                         'sub_proses_actual'=>0,
                         
@@ -117,14 +119,17 @@ class ProcessResource extends Controller
                 ]);
                 
                 if($index+1 == count($listProcess)-1){
-                   
+                    $ms=MaterialSubCategory::create([
+                        'sub_category_name'=>Production::find($request->production_id)->production_name,
+                        'material_category_id'=>998,
+                    ]);
                     
                     $matLast=Material::create([
                         'material_name'=>$processMaterial->process_material_name,
                         'material_description'=>$processMaterial->process_material_name." ".Production::find($request->production_id)->production_name,
                         'material_measure_unit'=>'pcs',
                         'material_quantity'=>0,
-                        'material_type'=>'Produk',
+                        'material_sub_category_id' => $ms->id,
                         'bagian_baju_id'=>$processMaterial->material->bagianBaju->id,
                     ]);
                     processMaterial::create([
@@ -152,13 +157,13 @@ class ProcessResource extends Controller
                 'process_material_id'=>$processMaterial->id,
                 'process_id'=>$request->process_id,
                 'user_id'=>$request->user_id,
-                'sub_proses_name'=>"User".$request->user_id." ".$processMaterial->process_material_name,
+                'sub_proses_name'=>$processMaterial->process_material_name." Pegawai ".User::find($request->user_id)->name,
                 'sub_proses_projected'=>$request['process_output_quantity'],
                 'sub_proses_actual'=>0,
                 
             ]);
         }
-        return redirect('/production/'.$request->production_id.'/edit')->with('succes', 'Proses Berhasil Ditambahkan');
+        return redirect('/production/'.$request->production_id)->with('succes', 'Proses Berhasil Ditambahkan');
 
 
         

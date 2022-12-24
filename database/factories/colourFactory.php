@@ -17,7 +17,7 @@ class colourFactory extends Factory
     public function definition()
     {
         return [
-            //
+            
         ];
     }
 }

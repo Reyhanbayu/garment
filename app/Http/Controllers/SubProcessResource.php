@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MaterialHistory;
 use App\Models\Process;
 use App\Models\processMaterial;
 use App\Models\SubProcessHistory;
@@ -129,6 +130,12 @@ class SubProcessResource extends Controller
             $pm->save();
             $pm->material->material_quantity=$pm->material->material_quantity+$request->quantity;
             $pm->material->save();
+
+            MaterialHistory::create([
+                'material_id'=>$pm->material->id,
+                'quantity'=>$request->quantity,
+                'description'=>'Pengambilan Untuk '.$subproses->sub_proses_name
+            ]);
         }
         $subProsesHistory=SubProcessHistory::find($request->sph_id);
         $subProsesHistory->is_done=true;

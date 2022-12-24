@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Material;
+use App\Models\MaterialCategory;
+use App\Models\MaterialHistory;
 use Illuminate\Http\Request;
 
 class MaterialResource extends Controller
@@ -14,8 +16,9 @@ class MaterialResource extends Controller
      */
     public function index()
     {
-        $materials = Material::where('material_type','!=','semi-finished')->get();
-        return view('material.indexMaterial', compact('materials'));
+        $materials = Material::where('material_sub_category_id','!=','999')->get();
+        $materialCategory=MaterialCategory::all();
+        return view('material.indexMaterial', compact('materials','materialCategory'));
     }
 
     /**
@@ -25,7 +28,8 @@ class MaterialResource extends Controller
      */
     public function create()
     {
-        return view('material.formMaterial');
+        $materialCategory=MaterialCategory::whereNotIn('id',[998,999])->get();
+        return view('material.formMaterial', compact('materialCategory'));
     }
 
     /**
@@ -42,6 +46,7 @@ class MaterialResource extends Controller
             'description' => 'required',
             'quantity' => 'required',
             'measure_unit' => 'required',
+            'sub_category_id' => 'required',
         ]);
         
         $data=[
@@ -49,10 +54,17 @@ class MaterialResource extends Controller
             'material_description' => $validated['description'],
             'material_quantity' => $validated['quantity'],
             'material_measure_unit' => $validated['measure_unit'],
-            'material_type' => "Raw Material",
+            'material_sub_category_id' => $validated['sub_category_id'],
         ];
 
         Material::create($data);
+
+        MaterialHistory::create([
+            'material_id' => Material::latest()->first()->id,
+            'quantity' => $validated['quantity'],
+            'description' => 'Material created',
+        ]);
+
         return redirect('/material')->with('success', 'Material created successfully');
     }
 
@@ -64,7 +76,12 @@ class MaterialResource extends Controller
      */
     public function show(Material $material)
     {
-        //
+        $materialHistory=MaterialHistory::where('material_id',$material->id)->get();
+
+        //sort materialHistory desc by created
+        $materialHistory = $materialHistory->sortByDesc('created_at');
+
+        return view('material.showMaterial', compact('material','materialHistory'));
     }
 
     /**
@@ -100,7 +117,7 @@ class MaterialResource extends Controller
             'material_description' => $validated['description'],
             'material_quantity' => $validated['quantity'],
             'material_measure_unit' => $validated['measure_unit'],
-            'material_type' => "Raw Material",
+            'material_sub_category_id' => $validated['sub_category_id'],
         ];
 
         $material->update($data);
@@ -117,5 +134,29 @@ class MaterialResource extends Controller
     {
         $material->delete();
         return redirect('/material')->with('success', 'Material deleted successfully');
+    }
+
+    public function pageQuantity(Material $material)
+    {
+        return view('material.updateMaterial', compact('material'));
+    }
+
+    public function updateQuantity(Request $request, Material $material)
+    {
+        $validated=$request->validate([
+            'quantity' => 'required',
+            'description' => 'required',
+        ]);
+
+        $data=[
+            'material_id' => $material->id,
+            'quantity' => $validated['quantity'],
+            'description' => $validated['description'],
+        ];
+
+        MaterialHistory::create($data);
+        $material->material_quantity += $validated['quantity'];
+        $material->save();
+        return redirect('/material/'.$material->id)->with('success', 'Material quantity updated successfully');
     }
 }
