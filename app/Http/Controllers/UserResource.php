@@ -55,6 +55,10 @@ class UserResource extends Controller
                 'isUser'=>0,
             ]);
         }
+        PersonProcess::create([
+            'user_id'=>$user->id,
+            'process_type_id'=>7,
+        ]);
         foreach($request->role as $role){
             PersonProcess::create([
                 'user_id'=>$user->id,
@@ -116,6 +120,10 @@ class UserResource extends Controller
             ]);
         }
         PersonProcess::where('user_id',$user->id)->delete();
+        PersonProcess::create([
+            'user_id'=>$user->id,
+            'process_type_id'=>7,
+        ]);
         foreach($request->role as $roles){
             PersonProcess::create([
                 'user_id'=>$user->id,

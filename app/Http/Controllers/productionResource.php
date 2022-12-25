@@ -173,6 +173,7 @@ class productionResource extends Controller
                         'bagian_baju_id' => $bagiann->id,
                     ]);
                     if ($bagiann->bagian_id == 5){
+                        
                         $processMaterial=[
                             'process_id' => $procesMats[0]->id,
                             'material_id' => $material->id,

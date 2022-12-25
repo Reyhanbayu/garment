@@ -216,7 +216,8 @@ class DatabaseSeeder extends Seeder
             'Jahit',
             'Setrika',
             'Finishing',
-            'Payet'
+            'Payet',
+            'Permak'
         ];
 
         foreach ($processType as $item) {
@@ -300,6 +301,10 @@ class DatabaseSeeder extends Seeder
             'process_type_id' => 1,
         ]);
 
+        PersonProcess::create([
+            'user_id' => 2,
+            'process_type_id' => 7,
+        ]);
 
         PersonProcess::create([
             'user_id' => 3,
@@ -307,29 +312,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         PersonProcess::create([
-            'user_id' => 2,
-            'process_type_id' => 3,
-        ]);
-        
-        PersonProcess::create([
             'user_id' => 3,
-            'process_type_id' => 4,
+            'process_type_id' => 7,
         ]);
 
-        PersonProcess::create([
-            'user_id' => 2,
-            'process_type_id' => 5,
-        ]);
 
-        //read csv
-        $colourcsv = array_map('str_getcsv', file('database/seeders/color_names.csv'));
-        $colourcsv = array_slice($colourcsv, 1);
-        foreach ($colourcsv as $key => $value) {
-            $color = new colour();
-            $color->colour_name = $value[0];
-            $color->colour_code = $value[1];
-            $color->save();
-        }
+        // //read csv
+        // $colourcsv = array_map('str_getcsv', file('database/seeders/color_names.csv'));
+        // $colourcsv = array_slice($colourcsv, 1);
+        // foreach ($colourcsv as $key => $value) {
+        //     $color = new colour();
+        //     $color->colour_name = $value[0];
+        //     $color->colour_code = $value[1];
+        //     $color->save();
+        // }
         
 
 

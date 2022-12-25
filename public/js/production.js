@@ -71,6 +71,11 @@ const colorSearch = document.querySelector('input#colorSearch');
 const colorList = document.querySelector('div#colorList');
 
 colorSearch.addEventListener('keyup', () => {
+    const buttonadd= document.querySelector('button#colorAdd');
+
+    if (buttonadd.hasAttribute('disabled')) {
+        buttonadd.setAttribute('disabled', 'disabled');
+    }
     //remove inner color list
     colorList.innerHTML = '';
     // fetch
@@ -81,12 +86,24 @@ colorSearch.addEventListener('keyup', () => {
     response.then(data => {
         colorList.innerHTML = '';
         //display 5 result
+        if(data.length == 0){
+            
+            buttonadd.removeAttribute('disabled');
+            colorList.innerHTML += `<div class="flex items-center justify-between"> 
+                <div class="flex items
+                -center">
+                    <div class="text-sm font-bold">There are no color please add new </div>
+                </div>
+            </div>`
+            buttonadd.setAttribute('onclick', `addColour('${colorSearch.value}')`);
+           
 
-        if (data.length > 5) {
+
+        }
+        else if (data.length > 5) {
             for (let i = 0; i < 5; i++) {
                 colorList.innerHTML += `<button type="button" class="flex items-center justify-between w-full" onclick="selectColor(${data[i].id})">
                     <div class="flex items-center">
-                        <div class="w-6 h-6 rounded-full mr-3" style="background-color: ${data[i].colour_code}"></div>
                         <div class="text-sm">${data[i].colour_name}</div>
                     </div>
                 </button>`;
@@ -97,6 +114,7 @@ colorSearch.addEventListener('keyup', () => {
                 -center">
                     <div class="w-6 h-6 rounded-full mr-3" style="background-color: #fff"></div>
                     <div class="text-sm font-bold">There are any other color please specify</div>
+                </div>
                 </div>`;
     
 
@@ -105,7 +123,6 @@ colorSearch.addEventListener('keyup', () => {
             for (let i = 0; i < data.length; i++) {
                 colorList.innerHTML += `<button type="button" class="flex items-center justify-between" onclick="selectColor(${data[i].id})">
                     <div class="flex items-center">
-                        <div class="w-6 h-6 rounded-full mr-3" style="background-color: ${data[i].colour_code}"></div>
                         <div class="text-sm">${data[i].colour_name}</div>
                     </div>
                 </button>`;
@@ -130,7 +147,7 @@ function selectColor(id) {
         //create label for child 
         let label = document.createElement('label');
         label.setAttribute('for', 'colour_id');
-        label.innerHTML = `<div class="w-6 h-6 rounded-full mr-3" style="background-color: ${data.colour_code}"></div>
+        label.innerHTML = `
         <div class="text-sm">${data.colour_name}</div>`
         label.classList.add('flex');
         placeholder.appendChild(label);
@@ -179,7 +196,24 @@ function selectColor(id) {
     })
 }
 
-
+function addColour(name) {
+    fetch (`/api/colour`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            colour_name: name,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        selectColor(data.id);
+        colorSearch.value = '';
+        colorList.innerHTML = '';
+        buttonadd.setAttribute('disabled', 'disabled');
+    })
+}
 
 
 function changeSubtype(id) {
@@ -227,6 +261,15 @@ function changeSubtype(id) {
                             option.value = material.id;
                             option.textContent = material.material_name;
                             selectMaterial.appendChild(option);
+                        });
+                        selectMaterial.addEventListener('change', function() {
+                            data.forEach(material => {
+                                if (material.id == selectMaterial.value) {
+                                    let material_image = document.querySelector(`img#material_image_${id}`);
+                                    material_image.src = '/uploads/material/' + material.material_image;
+                                }
+                            });
+                            
                         });
                     });
 

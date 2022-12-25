@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('process/{id}', [ApiController::class, 'getProcessUser']);
 Route::get('material/quantity/{id}',[ApiController::class,'getMaterialQuantity']);
+Route::post('colour',[ApiController::class,'postColour']);
 Route::get('colour/search',[ApiController::class,'searchColour']);
 Route::get('colour/{id}',[ApiController::class,'getColour']);
 Route::get('subcategory/{id}',[ApiController::class,'getSubCategory']);

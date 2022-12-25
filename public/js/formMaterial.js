@@ -48,7 +48,6 @@ selectType.addEventListener('change', function() {
                             option.value = data.id;
                             option.textContent = data.sub_category_name;
                             selectSubType.appendChild(option);
-    
                             addOption.remove();
                         })
                     }
@@ -58,4 +57,19 @@ selectType.addEventListener('change', function() {
                 };
             });
         });
+});
+
+const fileInput = document.querySelector('input#file_input');
+
+fileInput.addEventListener('change', function() {
+    const file = this.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', function() {
+        const image = document.querySelector('img#image');
+        image.classList.remove('hidden');
+        image.src = reader.result;
+    });
+
+    reader.readAsDataURL(file);
 });

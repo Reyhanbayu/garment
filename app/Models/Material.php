@@ -17,6 +17,7 @@ class Material extends Model
         'material_quantity',
         'material_measure_unit',
         'material_sub_category_id',
+        'material_image',
     ];
 
     public function production()

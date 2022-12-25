@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/process', processResource::class);
     Route::resource('/production', productionResource::class);
     Route::resource('/subproses', SubProcessResource::class);
+    Route::get('/report/{id}', [SubProcessResource::class, 'reportPage']);
+    Route::post('/report/{id}', [SubProcessResource::class, 'report']);
     Route::resource('/user', UserResource::class);
     Route::resource('/processtype', ProcessTypeResource::class);
     Route::resource('/productiontype', ProductionTypeResource::class);

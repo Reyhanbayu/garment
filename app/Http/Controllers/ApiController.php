@@ -45,6 +45,13 @@ class ApiController extends Controller
         $colour= colour::find($id);
         return response()->json($colour);
     }
+    public function postColour(Request $request){
+        $colour= colour::create([
+            'colour_code' => '#ffffff',
+            'colour_name' => $request->colour_name,
+        ]);
+        return response()->json($colour);
+    }
 
     public function getSubCategory($id){
         $materialSubCategory= MaterialSubCategory::where('material_category_id',$id)->get();

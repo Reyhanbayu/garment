@@ -10,33 +10,47 @@
 </head>
 <body class=" p-4">
     <div class=" p-0">
-        <h1>User {{ $subProses->subProcess->user->name }}</h1>
-        <h2>Proses {{ $subProses->subProcess->process->process_name }}</h2>
+        <h1 class=" text-xl font-bold my-4"> Laporan Hasil Kerja</h1>
         <table>
-            <thead>
-                <tr>
-                    <th>Sub Process Material</th>
-                    <th>Sisa Target</th>
-                    <th>Selesai</th>
-                    <th>Diserahkan</th>
-                    <th>Updated At</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr >
-                    <td class=" border border-black">{{ $subProses->subProcess->processMaterial->process_material_name }}</td>
-                    <td class=" border border-black">{{ $subProses->subProcess->sub_proses_projected }}</td>
-                    <td class=" border border-black">{{ $subProses->subProcess->sub_proses_actual }}</td>
-                    <td class=" border border-black">{{ $subProses->quantity }}</td>
-                    <td class=" border border-black">{{ $subProses->subProcess->updated_at }}</td>
-                </tr>
+            <tr>
+                <td class=" border border-black">Nama Proses</td>
+                <td class=" border border-black">
+                    <h2>Proses {{ $subProses->subProcess->process->process_name }}</h2>
+                </td>
+            </tr>
+            <tr>
+                <td class=" border border-black">Nama Penyelesai</td>
+                <td class=" border border-black"><h1>{{ $subProses->subProcess->user->name }}</h1></td>
                 
-            </tbody>
+            </tr>
+            <tr>
+                <td class=" border border-black">Nama Material</td>
+                <td class=" border border-black">{{ $subProses->subProcess->processMaterial->process_material_name }}</td>
+            </tr>
+            <tr>
+                <td class=" border border-black">Jumlah Target</td>
+                <td class=" border border-black">{{ $subProses->subProcess->sub_proses_projected }}</td>
+            </tr>
+
+            <tr>
+                <td class=" border border-black">Jumlah yang sudah di proses</td>
+                <td class=" border border-black">{{ $subProses->subProcess->sub_proses_actual }}</td>
+            </tr>
+            <tr>
+                <td class=" border border-black">Jumlah yang diserahkan</td>
+                <td class=" border border-black">{{ $subProses->quantity }}</td>
+            </tr>
+            <tr>
+                <td class=" border border-black">Tanggal Diselesaikan</td>
+                <td class=" border border-black">{{ $subProses->subProcess->updated_at }}</td>
+            </tr>
         </table>
         <br>
         @if ($subProses->is_done == 1)
             <h1>Sub Process Selesai dan telah dikonfirmasi</h1>
+
         @else
+        <div class="flex">
         <form action="/subproses/update/{{ $subProses->subProcess->id }}" method="POST">
             @csrf
             @method('PUT')
@@ -48,7 +62,13 @@
             <button type="submit" class="bg-blue-500 text-white px-4 py-3 rounded font-medium">Konfirmasi</button>
         
         </form>
+        @if ($listProcess[(count($listProcess)-2)] ==  $subProses->subProcess->process->type->id)
+            <a class="bg-red-500 text-white px-4 py-3 rounded font-medium mx-8" href="/report/{{ $subProses->id }}"> Report Rusak</a>
         @endif
+        </div>
+        @endif
+        
+        
     </div>
 </body>
 <script src="{{ url('https://cdn.tailwindcss.com') }}"></script>

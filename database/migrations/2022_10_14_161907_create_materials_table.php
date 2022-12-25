@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('material_quantity');
             $table->string('material_measure_unit');
             $table->foreignId('material_sub_category_id');
+            $table->string('material_image')->nullable();
             $table->timestamps();
         });
     }

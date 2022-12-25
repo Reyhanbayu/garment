@@ -64,6 +64,7 @@
                     <label for="input_quantity" class="label">Quantity Material</label>
                     <input type="number" name="input_quantity_1" id="input_quantity_1" class="border border-gray-400 rounded-sm p-3 h-12" min="0" >
                 </div>
+                    <img src="" alt="" class="w-12 h-12 mt-8" id="material_image_1">
             </div>
         </div>
         <button id="materialButton" type="button" class="bg-blue-500 w-full m-0 p-2 text-white rounded-sm">Add</button>
@@ -75,7 +76,10 @@
 
         <div class="flex ">
             <div class="flex flex-col w-full">
-                <input type="text" name="search" id="colorSearch" class="border border-gray-400 p-2 w-11/12" placeholder="Search Color">
+                <div class="flex">
+                    <input type="text" name="search" id="colorSearch" class="border border-gray-400 p-2 w-11/12" placeholder="Search Color">
+                    <button type="button" class="bg-blue-500 w-1/12 m-0 p-2 text-white rounded-sm disabled:bg-blue-300" id="colorAdd" disabled> Add</button>
+                </div>
                 <div class="bg-white w-11/12" id="colorList">
                     
                 </div>

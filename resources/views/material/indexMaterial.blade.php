@@ -46,7 +46,17 @@
     <table class="table-auto" id="materialTable">
         <thead>
             <tr>
-                <th class="border px-4 py-2 w-1/4">Name</th>
+                <th class="border px-4 py-2">Image</th>
+                <th class="border px-4 py-2 w-1/4 justify-between">
+                    <div class="flex justify-between">
+                    <div>Name</div>
+                    <button class="" id="sortName" onclick="sort(1)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                          </svg>
+                    </button>
+                    </div>
+                </th>
                 <th class="border px-4 py-2 w-1/4">Description</th>
                 <th class="border px-4 py-2 w-1/4" >Quantity</th>
                 <th class="border px-4 py-2 w-1/4">Action</th>
@@ -55,7 +65,8 @@
         <tbody id="materialTableBody">
             @foreach ($materials as $material)
                 <tr class="{{ $material->material_sub_category_id }}">
-                    <td class="border px-4 py-2">{{ $material->material_name }}</td>
+                    <td class="border px-4 py-2"><img src="{{ asset('uploads/material/' . $material->material_image) }}" alt="" class="w-20"></td>
+                    <td class="border px-4 py-2" >{{ $material->material_name }}</td>
                     <td class="border px-4 py-2">{{ $material->material_description }}</td>
                     <td class="border px-4 py-2">{{ $material->material_quantity }} {{ $material->material_measure_unit }}</td>
                     

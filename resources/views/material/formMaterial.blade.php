@@ -24,7 +24,7 @@
 
     @endif
     
-    <form action="/material" method="POST" id="createMaterial" class="flex flex-col m-12">
+    <form action="/material" method="POST" id="createMaterial" class="flex flex-col m-12" enctype="multipart/form-data">
         
         @csrf
         <label class="label">Material Name</label>
@@ -62,6 +62,12 @@
                 <option value="0">Please select category first</option>
             </select>
 
+        </div>
+
+        <label class="label mt-2">Material Image</label>
+        <div class="flex">
+            <input class="block w-full text-sm text-gray-900 border rounded-lg p-2" id="file_input" name="material_image" type="file">
+            <img src="" alt="" id="image" class=" w-24 h-24 hidden object-cover">
         </div>
 
         <br>

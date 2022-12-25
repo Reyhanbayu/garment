@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Material;
 use App\Models\MaterialCategory;
 use App\Models\MaterialHistory;
+use FontLib\Table\Type\name;
 use Illuminate\Http\Request;
 
 class MaterialResource extends Controller
@@ -47,6 +48,7 @@ class MaterialResource extends Controller
             'quantity' => 'required',
             'measure_unit' => 'required',
             'sub_category_id' => 'required',
+            'material_image' => 'image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         
         $data=[
@@ -56,6 +58,14 @@ class MaterialResource extends Controller
             'material_measure_unit' => $validated['measure_unit'],
             'material_sub_category_id' => $validated['sub_category_id'],
         ];
+
+        if($request->hasFile('material_image')){
+            $file = $request->file('material_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = $request['name'] . '.' . $extension;
+            $file->move('uploads/material/', $filename);
+            $data['material_image'] = $filename;
+        }
 
         Material::create($data);
 
