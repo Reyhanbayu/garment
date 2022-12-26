@@ -128,10 +128,23 @@ class SubProcessResource extends Controller
         $processMaterial[]=processMaterial::where('process_material_name',$subproses->processMaterial->process_material_name)->where('process_id',$listProcess[$index+1])->first();
 
         foreach ($processMaterial as $pm) {
+            
             $pm->process_material_quantity=$pm->process_material_quantity+$request->quantity;
             $pm->save();
-            $pm->material->material_quantity=$pm->material->material_quantity+$request->quantity;
-            $pm->material->save();
+
+            //if process material name contain (rusak)
+
+            if (strpos($pm->process_material_name, '(Rusak)') !== false) {
+                $materialname=str_replace('(Rusak)','',$pm->process_material_name);
+                $material=Material::where('material_name',$materialname)->first();
+                $material->material_quantity=$material->material_quantity+$request->quantity;
+                $material->save();
+            }
+            else{
+                $material=$pm->material;
+                $material->material_quantity=$material->material_quantity+$request->quantity;
+                $material->save();
+            }
 
             MaterialHistory::create([
                 'material_id'=>$pm->material->id,

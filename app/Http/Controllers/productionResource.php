@@ -212,6 +212,7 @@ class productionResource extends Controller
         $bagianBaju=bagian_baju::where('production_id', $production->id)->where('bagian_id',"!=",5)->get();
         $ukuranBagian=Material::whereIn('bagian_baju_id',$bagianBaju->pluck('id'))->get();
         $materials = Material::whereIn('id', $processMaterials->pluck('material_id'))->whereNotIn('id',$ukuranBagian->pluck('id'))->whereIn('material_sub_category_id',[999,998])->get();
+        
         $person=PersonProcess::where('process_type_id',2)->get();
 
 

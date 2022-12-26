@@ -22,12 +22,12 @@
     </div>
     <div class="mb-4">
         <label for="process_id" >Pilih Prosess</label>
-        <select id="process_id" name="process_id" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+        <select id="process_id" name="process_id" class="bg-gray-100 border-2 w-full p-4 rounded-lg ">
             @foreach ($processes as $process)
             @if ($process->process_type == 1 || $process->process_type == 5)
                 @continue
             @else
-            <option value="{{ $process->id }}">{{ $process->process_name }}</option>
+            <option value="{{ $process->id }}" class="{{ $process->process_type }}">{{ $process->process_name }}</option>
             @endif
                 
                 

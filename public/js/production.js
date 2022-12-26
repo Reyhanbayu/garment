@@ -29,6 +29,7 @@ materialButton.addEventListener('click', () => {
         <div class="flex flex-col w-1/4">
             <input type="number" name="input_quantity_${totalMaterial.value}" id="input_quantity_${totalMaterial.value}" class="border border-gray-400 rounded-sm p-3 h-12" min="0" >
         </div>
+        <img src="" alt="" class="w-12 h-12 mt-0" id="material_image_${totalMaterial.value}">
     </div>
 </div>
     `;

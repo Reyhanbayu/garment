@@ -117,12 +117,18 @@ class ProcessResource extends Controller
                     'process_material_quantity'=>0,
                     'process_material_status'=>'Output Produksi',
                 ]);
-                
-                if($index+1 == count($listProcess)-1){
-                    $ms=MaterialSubCategory::create([
-                        'sub_category_name'=>Production::find($request->production_id)->production_name,
-                        'material_category_id'=>998,
-                    ]);
+
+                if(Process::find($listProcess[$index+1])->process_type==5){
+                    if (MaterialSubCategory::where('sub_category_name',Production::find($request->production_id)->production_name)->count()==0) {
+                        $ms=MaterialSubCategory::create([
+                            'sub_category_name'=>Production::find($request->production_id)->production_name,
+                            'material_category_id'=>998,
+                        ]);
+                    }
+                    else{
+                        $ms=MaterialSubCategory::where('sub_category_name',Production::find($request->production_id)->production_name)->first();
+                    }
+                    
                     
                     $matLast=Material::create([
                         'material_name'=>$processMaterial->process_material_name,

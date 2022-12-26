@@ -159,7 +159,12 @@ selectprocessid.addEventListener('change', (e) => {
         }
     });
     //if selected first option
+    const lengthProcess = selectprocessid.options.length;
+    const lengthSelect = select.options.length;
     if (selectprocessid.selectedIndex == 0) {
+        for (i = 1; i < lengthSelect; i++) {
+            select.options[i].disabled = true;
+        }
         select.options[0].selected = true;
         select.options[0].disabled = false;
         ukuranBagian.classList.remove('hidden');
@@ -167,7 +172,24 @@ selectprocessid.addEventListener('change', (e) => {
         input.classList.add('hidden');
         input.classList.remove('flex');
     }
+    else if(selectprocessid.selectedIndex == lengthProcess) {
+        for (i = 0; i < lengthSelect; i++) {
+            //if name contains (rusak)
+            if (select.options[i].text.includes("(Rusak)")) {
+                select.options[i].disabled = false;
+                select.options[i].selected = true;
+            }
+            else {
+
+            select.options[i].disabled = true;
+            }
+        }
+    }
+
     else {
+        for (i = 1; i < lengthSelect; i++) {
+            select.options[i].disabled = false;
+        }
         select.options[1].selected = true;
         select.options[0].disabled = true;
         ukuranBagian.classList.add('hidden');
