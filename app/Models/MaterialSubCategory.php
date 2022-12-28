@@ -14,4 +14,9 @@ class MaterialSubCategory extends Model
         'material_category_id',
     ];
 
+    public function materialCategory()
+    {
+        return $this->belongsTo(MaterialCategory::class);
+    }
+
 }

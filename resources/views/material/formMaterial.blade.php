@@ -29,15 +29,15 @@
         @csrf
         <label class="label">Material Name</label>
             <div class="control">
-                <input class="input" type="text" name="name" id="name" placeholder="Material Name">
+                <input required class="input" type="text" name="name" id="name" placeholder="Material Name">
             </div>
         <label class="label">Material Description</label>
             <div class="control">
-              <textarea class="textarea" name="description" id="description" placeholder="Material Description"></textarea>
+              <textarea required class="textarea" name="description" id="description" placeholder="Material Description"></textarea>
             </div>
         <label class="label">Material Quantity</label>
         <div class="flex">
-            <input type="number" name="quantity" id="quantity" class="input">
+            <input required type="number" name="quantity" id="quantity" class="input">
             <div>
                 <select name="measure_unit" id="measure_unit" class="input">
                     <option value="kg">kg</option>

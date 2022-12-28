@@ -7,6 +7,7 @@ materialButton.addEventListener('click', () => {
     totalMaterial.value = parseInt(totalMaterial.value) + 1;
     const materialForm = document.createElement('div');
     materialForm.classList.add('flex');
+    materialForm.setAttribute('id', 'materialForm_' + totalMaterial.value);
     materialForm.innerHTML = `
     <div class="flex flex-col w-3/4">
             <div class=" w-full flex flex-row">
@@ -30,6 +31,7 @@ materialButton.addEventListener('click', () => {
             <input type="number" name="input_quantity_${totalMaterial.value}" id="input_quantity_${totalMaterial.value}" class="border border-gray-400 rounded-sm p-3 h-12" min="0" >
         </div>
         <img src="" alt="" class="w-12 h-12 mt-0" id="material_image_${totalMaterial.value}">
+        <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="removeMaterialButton_${totalMaterial.value}" onclick="removeMaterial(${totalMaterial.value})">Remove</button>
     </div>
 </div>
     `;
@@ -72,6 +74,7 @@ const colorSearch = document.querySelector('input#colorSearch');
 const colorList = document.querySelector('div#colorList');
 
 colorSearch.addEventListener('keyup', () => {
+    colorList.classList.remove('hidden');
     const buttonadd= document.querySelector('button#colorAdd');
 
     if (buttonadd.hasAttribute('disabled')) {
@@ -93,7 +96,7 @@ colorSearch.addEventListener('keyup', () => {
             colorList.innerHTML += `<div class="flex items-center justify-between"> 
                 <div class="flex items
                 -center">
-                    <div class="text-sm font-bold">There are no color please add new </div>
+                    <div class=" text-base font-bold py-2">There are no color please add new </div>
                 </div>
             </div>`
             buttonadd.setAttribute('onclick', `addColour('${colorSearch.value}')`);
@@ -103,7 +106,7 @@ colorSearch.addEventListener('keyup', () => {
         }
         else if (data.length > 5) {
             for (let i = 0; i < 5; i++) {
-                colorList.innerHTML += `<button type="button" class="flex items-center justify-between w-full" onclick="selectColor(${data[i].id})">
+                colorList.innerHTML += `<button type="button" class="flex items-center justify-between w-full hover:bg-slate-100" onclick="selectColor(${data[i].id})">
                     <div class="flex items-center">
                         <div class="text-sm">${data[i].colour_name}</div>
                     </div>
@@ -122,7 +125,7 @@ colorSearch.addEventListener('keyup', () => {
         }
         else {
             for (let i = 0; i < data.length; i++) {
-                colorList.innerHTML += `<button type="button" class="flex items-center justify-between" onclick="selectColor(${data[i].id})">
+                colorList.innerHTML += `<button type="button" class="flex items-center justify-between w-full hover:bg-slate-100" onclick="selectColor(${data[i].id})">
                     <div class="flex items-center">
                         <div class="text-sm">${data[i].colour_name}</div>
                     </div>
@@ -138,15 +141,21 @@ colorSearch.addEventListener('keyup', () => {
 });
 let placeholder = document.querySelector('div#placeholderInput');
 function selectColor(id) {
+    const colorSearch = document.querySelector('input#colorSearch');
+    colorList.classList.add('hidden');
+    colorSearch.removeAttribute('required');
     const response = fetch(`/api/colour/${id}`, 
     { method: 'GET' }
     ).then(response => response.json());
 
     response.then(data => {
-        console.log(data);
+
 
         //create label for child 
         let label = document.createElement('label');
+        label.classList.add('font-bold');
+        label.classList.add('mt-3');
+        label.setAttribute('id', 'colour'+data.id);
         label.setAttribute('for', 'colour_id');
         label.innerHTML = `
         <div class="text-sm">${data.colour_name}</div>`
@@ -157,6 +166,8 @@ function selectColor(id) {
         let output=document.createElement('div');
         output.classList.add('flex');
         output.classList.add('w-full');
+        output.setAttribute('id', "output_"+data.id);
+
         output.innerHTML = `
         <input type="hidden" name="colour_id[]" value="${data.id}">
         <div class="flex flex-col">
@@ -183,7 +194,9 @@ function selectColor(id) {
         <label for="output_quantity">XXL</label>
         <input type="number" name="output_quantity[]" id="output_quantity[]" class="border border-gray-400 rounded-sm p-3 h-12" value="0" min="0">
         <input type="hidden" name="ukuran_id[]" value="5">
+        
         </div>
+        <button type="button" class="bg-red-500 text-white rounded-md p-3 mt-6 w-40 " onclick="removeColor(${data.id})">Remove</button>
         
         
         `;
@@ -279,3 +292,15 @@ function changeSubtype(id) {
         });
     selectSubType
 };
+
+const removeMaterial = (id) => {
+    const material = document.querySelector(`div#materialForm_${id}`);
+    material.remove();
+}
+
+const removeColor = (id) => {
+    const label = document.querySelector(`label#colour${id}`);
+    const output = document.querySelector(`div#output_${id}`);
+    label.remove();
+    output.remove();
+}

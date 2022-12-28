@@ -52,6 +52,7 @@ class MaterialResource extends Controller
         ]);
         
         $data=[
+            'id'=>Material::latest()->first()->id+1,
             'material_name' => $validated['name'],
             'material_description' => $validated['description'],
             'material_quantity' => $validated['quantity'],
@@ -102,7 +103,8 @@ class MaterialResource extends Controller
      */
     public function edit(Material $material)
     {
-        return view('material.editMaterial', compact('material'));
+        $materialCategory=MaterialCategory::whereNotIn('id',[998,999])->get();
+        return view('material.editMaterial', compact('material','materialCategory'));
     }
 
     /**
@@ -117,15 +119,14 @@ class MaterialResource extends Controller
         $validated=$request->validate([
             'name' => 'required',
             'description' => 'required',
-            'quantity' => 'required',
             'measure_unit' => 'required',
+            'sub_category_id' => 'required',
 
         ]);
 
         $data=[
             'material_name' => $validated['name'],
             'material_description' => $validated['description'],
-            'material_quantity' => $validated['quantity'],
             'material_measure_unit' => $validated['measure_unit'],
             'material_sub_category_id' => $validated['sub_category_id'],
         ];

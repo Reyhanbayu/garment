@@ -39,7 +39,22 @@
             <tr>
                 <td class="border px-4 py-2">{{ $production->production_name }}</td>
                 <td class="border px-4 py-2">{{ $production->production_description }}</td>
-                <td class="border px-4 py-2">{{ $production->production_projected_end_date }}</td>
+                <td class="border px-4 py-2">{{ $production->production_projected_end_date }} 
+                    @php
+                        date_default_timezone_set('Asia/Jakarta');
+                        $date1 = date_create($production->production_projected_end_date);
+                        $date2 = date_create(date('Y-m-d'));
+                        $diff = date_diff($date1,$date2);
+
+                    @endphp
+                @if ($diff->format('%a') < 0)
+                    <span class="text-red-600 p-2">( {{ $diff->format('%a') }} Hari Telat )</span>
+                @else
+                    
+                    <span class=" text-green-600 p-2">( {{ $diff->format('%a') }} Hari Lagi )</span>
+
+                @endif
+                </td>
                 <td class="border px-4 py-2"> @foreach ($production->process as $pp)
                     <ul>
                     @if (in_array($pp->process_type,[1]))
@@ -53,7 +68,11 @@
                     <ul>
                     @if (in_array($pp->process_type,[5]))
                         @foreach ($pp->processMaterial as $ppm)
-                           <li>  {{ $ppm->process_material_name }} / {{ $ppm->process_material_quantity }} </li>
+                            @if($ppm->material->material_quantity == 0)
+                                @continue
+                            @else
+                           <li>  {{ $ppm->process_material_name }} / {{ $ppm->material->material_quantity }} </li>
+                           @endif
                         @endforeach
                     @endif
                 </ul>

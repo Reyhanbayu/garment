@@ -27,7 +27,7 @@ class ProcessResource extends Controller
      */
     public function index()
     {
-        $processTypes = process_type::whereNotIn('id',[1,5])->get();
+        $processTypes = process_type::whereNotIn('id',[1,5,7])->get();
         $productionProcessTypes= production_process_type::all()->groupBy('production_type_id');
         $personProcesses= PersonProcess::all()->groupBy('user_id');
 

@@ -13,4 +13,10 @@ class MaterialCategory extends Model
         'id',
         'category_name',
     ];
+
+    public function materialSubCategory()
+    {
+        return $this->hasMany(MaterialSubCategory::class);
+    }
+    
 }

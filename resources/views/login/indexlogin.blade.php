@@ -1,3 +1,14 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  @vite('resources/css/app.css')
+  <link rel="stylesheet" href="{{ url('css/main.css?v=1628755089081')}}">
+  <link rel="stylesheet" href="{{ url('https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css')}}">
+
+</head>
+<body class="m-0 p-0">
 <section class="h-screen">
   @vite('resources/css/app.css')
   <div class="px-6 h-full text-gray-800">
@@ -70,3 +81,7 @@
     </div>
   </div>
 </section>
+</body>
+<script src="{{ url('https://cdn.tailwindcss.com') }}"></script>
+<script type="text/javascript" src="{{ url('js/main.min.js?v=1628755089081')}}"></script>
+</html>

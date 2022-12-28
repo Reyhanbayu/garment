@@ -33,6 +33,7 @@ selectType.addEventListener('change', function() {
             const option = document.createElement('option');
             option.value = '0';
             option.textContent = 'Select Subcategory';
+            selectSubType.appendChild(option);
             data.forEach(subcategory => {
                 const option = document.createElement('option');
                 option.value = subcategory.id;

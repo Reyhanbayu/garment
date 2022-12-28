@@ -11,37 +11,37 @@
 <body class=" p-4">
     <div class=" p-0">
         <h1 class=" text-xl font-bold my-4"> Laporan Hasil Kerja</h1>
-        <table>
+        <table class="table-fixed">
             <tr>
-                <td class=" border border-black">Nama Proses</td>
+                <td class=" border border-black bg-gray-200">Nama Proses</td>
                 <td class=" border border-black">
                     <h2>Proses {{ $subProses->subProcess->process->process_name }}</h2>
                 </td>
             </tr>
             <tr>
-                <td class=" border border-black">Nama Penyelesai</td>
+                <td class=" border border-black bg-gray-200">Nama Penyelesai</td>
                 <td class=" border border-black"><h1>{{ $subProses->subProcess->user->name }}</h1></td>
                 
             </tr>
             <tr>
-                <td class=" border border-black">Nama Material</td>
+                <td class=" border border-black bg-gray-200">Nama Material</td>
                 <td class=" border border-black">{{ $subProses->subProcess->processMaterial->process_material_name }}</td>
             </tr>
             <tr>
-                <td class=" border border-black">Jumlah Target</td>
+                <td class=" border border-black bg-gray-200">Jumlah Target</td>
                 <td class=" border border-black">{{ $subProses->subProcess->sub_proses_projected }}</td>
             </tr>
 
             <tr>
-                <td class=" border border-black">Jumlah yang sudah di proses</td>
+                <td class=" border border-black bg-gray-200">Jumlah yang sudah di proses</td>
                 <td class=" border border-black">{{ $subProses->subProcess->sub_proses_actual }}</td>
             </tr>
             <tr>
-                <td class=" border border-black">Jumlah yang diserahkan</td>
+                <td class=" border border-black bg-gray-200">Jumlah yang diserahkan</td>
                 <td class=" border border-black">{{ $subProses->quantity }}</td>
             </tr>
             <tr>
-                <td class=" border border-black">Tanggal Diselesaikan</td>
+                <td class=" border border-black bg-gray-200">Tanggal Diselesaikan</td>
                 <td class=" border border-black">{{ $subProses->subProcess->updated_at }}</td>
             </tr>
         </table>

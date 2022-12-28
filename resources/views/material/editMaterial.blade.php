@@ -19,11 +19,6 @@
             <div class="control">
               <textarea class="textarea" name="description" id="description">{{ $material->material_description }}</textarea>
             </div>
-        <label class="label">Material Quantity</label>
-        <div>
-            <input type="number" name="quantity" id="quantity" class="input" value="{{ $material->material_quantity }}">
-            
-        </div>
         <label class="label">Material Measures</label>
         <select name="measure_unit" id="measure_unit" class="input">
                 <option value="kg" {{ $material->material_measure_unit == 'kg' ? 'selected' : '' }}>kg</option>
@@ -31,15 +26,30 @@
                 <option value="m" {{ $material->material_measure_unit == 'm' ? 'selected' : '' }}>m</option>
                 <option value="piece" {{ $material->material_measure_unit == 'piece' ? 'selected' : '' }}>piece</option>
             </select>
-            <!--<div class="control">-->
-            <!--  <div class="select" name="type" id="type">-->
-            <!--    <select>-->
-            <!--        <<option value="Raw Material" {{ $material->material_type == 'Raw Material' ? 'selected' : '' }}>Raw</option>-->
-            <!--        <option value="Finished" {{ $material->material_type == 'Finished' ? 'selected' : '' }}>Finished</option>-->
-            <!--    </select>-->
-            <!--  </div>-->
-            <!--</div>-->
+
+            <label class="label">Material Category</label>
+            <div class="select" name="category" id="category">
+                <select name="category" id="selectType" class=" border border-gray-400 p-2">
+                    <option value="0" selected>Select to filter by Category...</option>
+                    @foreach ($materialCategory as $category)
+                        <option value="{{ $category->id }}" {{ $material->materialSubCategory->materialCategory->id == $category->id ? 'selected' : '' }}>{{ $category->category_name }}</option>
+
+                        
+                    @endforeach
+                </select>
+                
+                <select name="sub_category_id" id="selectSubType" class="border border-gray-400 p-2" >
+                    @foreach ($material->materialSubCategory->materialCategory->materialSubCategory as $subCategory)
+                        <option value="{{ $subCategory->id }}" {{ $material->material_sub_category_id == $subCategory->id ? 'selected' : '' }}>{{ $subCategory->sub_category_name }}</option>
+                        
+                    @endforeach
+                </select>
+    
+            </div>
         <br>
         <button type="submit" class="button green">Submit</button>
+
     </form>
+
+    <script src="{{ asset("js/formMaterial.js") }}"></script>
 @endsection

@@ -55,7 +55,11 @@
             <tr>
                 <td class="border px-4 py-2">{{ $m->created_at }}</td>
                 <td class="border px-4 py-2">{{ $m->description }}</td>
-                <td class="border px-4 py-2">{{ $m->quantity }}</td>
+                @if ($m->quantity < 0)
+                    <td class="border px-4 py-2 text-red-500">{{ $m->quantity }}</td>
+                @else
+                    <td class="border px-4 py-2 text-green-500">+ {{ $m->quantity }}</td>
+                @endif
             </tr>
             @endforeach
         </tbody>

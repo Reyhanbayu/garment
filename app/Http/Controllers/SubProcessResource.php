@@ -136,7 +136,8 @@ class SubProcessResource extends Controller
 
             if (strpos($pm->process_material_name, '(Rusak)') !== false) {
                 $materialname=str_replace('(Rusak)','',$pm->process_material_name);
-                $material=Material::where('material_name',$materialname)->first();
+
+                $material=Material::where('material_name',$materialname)->where('material_sub_category_id','!=',$pm->material->material_sub_category_id)->first();
                 $material->material_quantity=$material->material_quantity+$request->quantity;
                 $material->save();
             }

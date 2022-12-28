@@ -1,7 +1,14 @@
 @extends('layouts.main')
 
 @section('container')
-
+@if (session('success'))
+    <div class="bg-green-500 text-black p-2">
+        {{ session('success') }}
+    </div>
+    <script>
+        alert('success');
+    </script>
+@endif
 <center>
     <hr class="navbar-divider">
     <label class="label">Table Process</label>
@@ -13,14 +20,7 @@
     
     <!--<a href="/processtype/create" class="bg-blue-500 text-white px-4 py-3 rounded font-medium" style="padding: 0.5rem">Tambah Proses</a>-->
 </div>
-@if (session('succes'))
-    <div class="bg-green-500 text-black p-2">
-        {{ session('succes') }}
-    </div>
-    <script>
-        alert('succes');
-    </script>
-@endif
+
 <table class="table-auto">
     <thead>
         <tr>
@@ -139,7 +139,11 @@
                 <td class="border px-4 py-2">{{ $person[0]->user->name }}</td>
                 <td class="border px-4 py-2">
                     @foreach ($person as $ps)
+                        @if ($ps->process_type_id == 7)
+                            @continue
+                        @else
                         {{ $ps->process_type->process_type_name }} <br>
+                        @endif
                         
                     @endforeach
                 </td>
